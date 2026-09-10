@@ -46,8 +46,20 @@
             font: inherit;
         }
 
+        input[type="number"] {
+            appearance: textfield;
+            -moz-appearance: textfield;
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            margin: 0;
+            -webkit-appearance: none;
+        }
+
         .checkbox { display: flex; gap: 10px; align-items: center; margin: 4px 0 20px; }
         .checkbox input { width: auto; margin: 0; }
+
+        .tempo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
         button {
             background: #1769aa;
@@ -93,12 +105,26 @@
             <option value="cinestesico">Cinestésico</option>
         </select>
 
-        <label for="tempo">Tempo máximo de foco (minutos)</label>
-        <input id="tempo" type="number" min="1" value="30" required>
+        <label>Tempo máximo de foco</label>
+        <div class="tempo">
+            <div>
+                <label for="horas">Horas</label>
+                <input id="horas" type="number" min="0" value="0" required>
+            </div>
+            <div>
+                <label for="minutos">Minutos</label>
+                <input id="minutos" type="number" min="0" max="59" value="30" required>
+            </div>
+        </div>
 
         <label class="checkbox" for="cores">
             <input id="cores" type="checkbox">
             Sensibilidade a cores vivas
+        </label>
+
+        <label class="checkbox" for="pictogramas">
+            <input id="pictogramas" type="checkbox" checked>
+            Utilizar pictogramas
         </label>
 
         <button type="button" onclick="gerarPlano()">Gerar plano adaptativo</button>
@@ -108,19 +134,19 @@
     <script>
         function gerarPlano() {
             const nome = document.getElementById('nome').value.trim();
-            const tempo = Number(document.getElementById('tempo').value);
+            const horas = Number(document.getElementById('horas').value);
+            const minutos = Number(document.getElementById('minutos').value);
+            const tempo = horas * 60 + minutos;
             const resultado = document.getElementById('resultado');
 
-            if (!nome || !tempo || tempo < 1) {
+            if (!nome || horas < 0 || minutos < 0 || minutos > 59 || tempo < 1) {
                 resultado.style.display = 'block';
                 resultado.innerHTML = '<p class="erro">Informe o nome e um tempo de foco válido.</p>';
                 return;
             }
 
-            const nivel = document.getElementById('nivel').value;
-            const estilo = document.getElementById('estilo').value;
             const coresVivas = document.getElementById('cores').checked;
-            const usarPictogramas = estilo === 'visual' && nivel === 'Nivel_1';
+            const usarPictogramas = document.getElementById('pictogramas').checked;
             const tolerancia = coresVivas ? 80 : 100;
             const tema = coresVivas ? 'Monocromático' : 'Padrão suave';
 
