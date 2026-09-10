@@ -1,39 +1,43 @@
-SISTEMA DE APRENDIZAGEM ADAPTATIVA PARA PESSOAS COM TEA(TRANSTORNO DE ESPECTRO AUTISTA)
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const { testConnection } = require('./config/db');
 
-ATORES: ALUNO COM TEA, PROFESSORES
+const authRoutes = require('./routes/authRoutes');
+const materiaRoutes = require('./routes/materiaRoutes');
+const assuntoRoutes = require('./routes/assuntoRoutes');
+const questaoRoutes = require('./routes/questaoRoutes');
+const respostaRoutes = require('./routes/respostaRoutes');
 
-INTERFACES: TELA DE QUESTÕES, FEEDBACK/ERRO, DASHBOARD, PAINEL ADM
+const app = express();
 
-BACKEND: API REST, AUTH MODULE, MODULO DE CORREÇÃO , MOTOR ADAPTATIVO
+app.use(cors());
+app.use(express.json());
 
-I.A: API DA IA E RECOMENDAÇÕES
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', servico: 'pfc-aprendizagem-backend' });
+});
 
-BANCO DE DADOS: USUARIOS, QUESTOES E CONTEUDO, HISTORICO, RECOMENDAÇÕES
+app.use('/api/auth', authRoutes);
+app.use('/api/materias', materiaRoutes);
+app.use('/api/assuntos', assuntoRoutes);
+app.use('/api/questoes', questaoRoutes);
+app.use('/api/respostas', respostaRoutes);
 
-TECNOLOGIAS:
-FRONTEND:
--HTML5,CSS3,JAVASCRIPT(REACT.JS QUANDO NECESSARIO)
+// Tratamento de rota nao encontrada
+app.use((req, res) => {
+  res.status(404).json({ erro: 'Rota nao encontrada.' });
+});
 
-BACKEND:
--NODE.JS/EXPRESS
--JAVA SE
+// Tratamento de erros nao capturados
+app.use((err, req, res, next) => {
+  console.error('[erro nao tratado]', err);
+  res.status(500).json({ erro: 'Erro interno no servidor.' });
+});
 
-BANCO DE DADOS:
--MYSQL
+const PORT = process.env.PORT || 3000;
 
-AUTENTICAÇÃO
-- JWT+BCRYPT(HASH DE SENHAS)
-
-I.A
-- API EXTERNA DE INTELIGENCIA ARTIFICIAL PARA ANALISE E CORREÇÃO DE RESPOSTAS
-
-SEGURANÇA:
--AUTENTICAÇÃO SEGURA DE USUARIOS
--SENHAS ARMAZENADAS COM HASH 
--CONTROLE DE ACESSO AOS DADOS CONFORME O PAPELS DO USUARIO
-
-Desenvolvimento conduzido com Scrum, com gestão de tarefas via GitHub Project.
-
-EM DESENVOLVIMENTO.....
-
-ALUNO: HENRY DYOJI NOMURA
+app.listen(PORT, async () => {
+  console.log(`[server] Backend do PFC rodando na porta ${PORT}`);
+  await testConnection();
+});
