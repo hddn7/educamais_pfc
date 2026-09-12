@@ -1,6 +1,6 @@
 package com.projeto.pfc.dto;
 
-public class FUNCAO1 {
+public class ativ_1409_1 {
     private String aluno;
     private String temaInterface;
     private String pausaRecomendada;

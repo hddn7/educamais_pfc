@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plano Adaptativo</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #eef6ff, #fdf4ff);
+      color: #1f2937;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: min(90%, 560px);
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+      padding: 28px;
+    }
+
+    h1 {
+      margin-top: 0;
+      text-align: center;
+      color: #2563eb;
+    }
+
+    .form-box {
+      display: grid;
+      gap: 16px;
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-weight: 600;
+    }
+
+    input {
+      padding: 12px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 500;
+      flex-direction: row;
+    }
+
+    .check input {
+      width: 18px;
+      height: 18px;
+    }
+
+    button {
+      border: none;
+      background: #2563eb;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .resultado {
+      margin-top: 24px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    .resultado h2 {
+      margin-top: 0;
+    }
+
+    .resultado p {
+      margin: 8px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Plano Adaptativo</h1>
+
+    <form id="formPlano" class="form-box">
+      <label>
+        Nome do aluno
+        <input type="text" id="nomeAluno" value="Ana" required>
+      </label>
+
+      <label>
+        Tempo horas
+        <input type="number" id="tempoFocoHoras" value="1" min="0" required>
+      </label>
+
+      <label>
+        Tempo minutos
+        <input type="number" id="tempoFocoMinutos" value="30" min="0" max="59" required>
+      </label>
+
+      <label class="check">
+        <input type="checkbox" id="sensibilidadeCoresVivas">
+        Sensível a cores 
+      </label>
+
+      <label class="check">
+        <input type="checkbox" id="utilizarPictogramas" checked>
+        Usar pictogramas
+      </label>
+
+      <button id="botaoGerar" type="submit">Gerar plano</button>
+    </form>
+
+    <div class="resultado">
+      <h2>Resultado</h2>
+      <p><strong>Aluno:</strong> <span id="resultadoAluno">-</span></p>
+      <p><strong>Tema da interface:</strong> <span id="resultadoTema">-</span></p>
+      <p><strong>Pausa recomendada:</strong> <span id="resultadoPausa">-</span></p>
+      <p><strong>Tolerância à estimulação:</strong> <span id="resultadoTolerancia">-</span></p>
+      <p><strong>Pictogramas:</strong> <span id="resultadoPictogramas">-</span></p>
+      <p id="mensagem" role="status"></p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('formPlano').addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      const botao = document.getElementById('botaoGerar');
+      const mensagem = document.getElementById('mensagem');
+      botao.disabled = true;
+      botao.textContent = 'Gerando...';
+      mensagem.textContent = '';
+
+      const payload = {
+        nomeAluno: document.getElementById('nomeAluno').value,
+        tempoFocoHoras: Number(document.getElementById('tempoFocoHoras').value),
+        tempoFocoMinutos: Number(document.getElementById('tempoFocoMinutos').value),
+        sensibilidadeCoresVivas: document.getElementById('sensibilidadeCoresVivas').checked,
+        utilizarPictogramas: document.getElementById('utilizarPictogramas').checked
+      };
+
+      try {
+        const response = await fetch('/api/plano/adaptativo', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+          throw new Error(result.erro || 'Nao foi possivel gerar o plano.');
+        }
+
+        document.getElementById('resultadoAluno').textContent = result.aluno || '-';
+        document.getElementById('resultadoTema').textContent = result.temaInterface || '-';
+        document.getElementById('resultadoPausa').textContent = result.pausaRecomendada || '-';
+        document.getElementById('resultadoTolerancia').textContent = result.toleranciaEstimulacao || '-';
+        document.getElementById('resultadoPictogramas').textContent = result.utilizarPictogramas || '-';
+        mensagem.textContent = 'Plano gerado com sucesso.';
+      } catch (error) {
+        mensagem.textContent = 'Nao foi possivel conectar ao Java. Inicie o servidor e tente novamente.';
+      } finally {
+        botao.disabled = false;
+        botao.textContent = 'Gerar plano';
+      }
+    });
+  </script>
+</body>
+</html>

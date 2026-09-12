@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plano adaptativo | PFC</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #102a43, #2f6690 55%, #f0b67f);
+            color: #183b56;
+            padding: 20px;
+        }
+
+        main {
+            width: min(100%, 1180px);
+            margin: auto;
+            background: #fffdf8;
+            min-height: calc(100vh - 40px);
+            padding: clamp(28px, 5vw, 64px);
+            border-radius: 12px;
+            box-shadow: 0 16px 40px rgba(16, 42, 67, .28);
+        }
+
+        h1 { margin: 0 0 8px; color: #102a43; }
+        .intro { margin: 0 0 28px; color: #52606d; }
+
+        label, input, select, button {
+            display: block;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        label { font-weight: 700; }
+        input, select {
+            padding: 12px;
+            margin-bottom: 18px;
+            border: 1px solid #bcccdc;
+            border-radius: 6px;
+            background: white;
+            color: #183b56;
+            font: inherit;
+        }
+
+        input[type="number"] {
+            appearance: textfield;
+            -moz-appearance: textfield;
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            margin: 0;
+            -webkit-appearance: none;
+        }
+
+        .checkbox { display: flex; gap: 10px; align-items: center; margin: 4px 0 20px; }
+        .checkbox input { width: auto; margin: 0; }
+
+        .tempo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        button {
+            background: #1769aa;
+            color: white;
+            border: 0;
+            cursor: pointer;
+            border-radius: 6px;
+            padding: 14px;
+            font: 700 1rem Arial, sans-serif;
+        }
+        button:hover { background: #0d4f80; }
+
+        #resultado {
+            display: none;
+            margin-top: 24px;
+            padding: 20px;
+            border-left: 5px solid #2f6690;
+            border-radius: 6px;
+            background: #e8f1f5;
+        }
+        #resultado h2 { margin-top: 0; }
+        .erro { color: #9b2c2c; margin-top: 12px; }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Plano adaptativo</h1>
+        <p class="intro">Preencha o perfil para gerar uma recomendação personalizada de aprendizagem</p>
+
+        <label for="nome">Nome do aluno</label>
+        <input id="nome" type="text" required>
+
+        <label for="nivel">Nível de suporte</label>
+        <select id="nivel">
+            <option value="Nivel_1">Nível 1</option>
+            <option value="Nivel_2">Nível 2</option>
+            <option value="Nivel_3">Nível 3</option>
+        </select>
+        <label for="estilo">Estilo de aprendizagem</label>
+        <select id="estilo">
+            <option value="visual">Visual</option>
+            <option value="auditivo">Auditivo</option>
+            <option value="cinestesico">Cinestésico</option>
+        </select>
+
+        <label>Tempo máximo de foco</label>
+        <div class="tempo">
+            <div>
+                <label for="horas">Horas</label>
+                <input id="horas" type="number" min="0" value="0" required>
+            </div>
+            <div>
+                <label for="minutos">Minutos</label>
+                <input id="minutos" type="number" min="0" max="59" value="30" required>
+            </div>
+        </div>
+
+        <label class="checkbox" for="cores">
+            <input id="cores" type="checkbox">
+            Sensibilidade a cores vivas
+        </label>
+
+        <label class="checkbox" for="pictogramas">
+            <input id="pictogramas" type="checkbox" checked>
+            Utilizar pictogramas?
+        </label>
+
+        <button type="button" onclick="gerarPlano()">Gerar plano adaptativo</button>
+        <section id="resultado" aria-live="polite"></section>
+    </main>
+
+    <script>
+        function gerarPlano() {
+            const nome = document.getElementById('nome').value.trim();
+            const horas = Number(document.getElementById('horas').value);
+            const minutos = Number(document.getElementById('minutos').value);
+            const tempo = horas * 60 + minutos;
+            const resultado = document.getElementById('resultado');
+
+            if (!nome || horas < 0 || minutos < 0 || minutos > 59 || tempo < 1) {
+                resultado.style.display = 'block';
+                resultado.innerHTML = '<p class="erro">Informe o nome e um tempo de foco válido.</p>';
+                return;
+            }
+
+            const coresVivas = document.getElementById('cores').checked;
+            const usarPictogramas = document.getElementById('pictogramas').checked;
+            const tolerancia = coresVivas ? 80 : 100;
+            const tema = coresVivas ? 'Monocromático' : 'Padrão suave';
+
+            resultado.style.display = 'block';
+            resultado.innerHTML = `
+                <h2>Plano gerado</h2>
+                <p><strong>Aluno:</strong> ${nome}</p>
+                <p><strong>Tema da interface:</strong> ${tema}</p>
+                <p><strong>Pausa recomendada:</strong> ${tempo / 2} minutos</p>
+                <p><strong>Tolerância à estimulação:</strong> ${tolerancia}%</p>
+                <p><strong>Utilizar pictogramas:</strong> ${usarPictogramas ? 'Sim' : 'Não'}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
