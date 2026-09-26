@@ -177,11 +177,12 @@ O repositório também inclui uma aplicação executável em Node.js e Express, 
 Requisitos: Node.js 20 ou superior e npm.
 
 ```powershell
+Set-Location login
 npm install
 Copy-Item .env.example .env
 npm run dev
 ```
 
-Abra `http://localhost:3000`. Antes de usar em produção, substitua `SESSION_SECRET` no arquivo `.env` por um segredo aleatório com pelo menos 32 caracteres. O banco SQLite é criado automaticamente em `data/questio.sqlite`.
+Abra `http://localhost:3000`. Antes de usar em produção, substitua `SESSION_SECRET` no arquivo `login/.env` por um segredo aleatório com pelo menos 32 caracteres. O banco SQLite é criado automaticamente em `login/data/questio.sqlite`.
 
 Os documentos legais incluídos são minutas acadêmicas e precisam ser revisados antes de qualquer uso real.

@@ -5,8 +5,8 @@
   "description": "Plataforma de aprendizagem adaptativa acessível para pessoas com TEA",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js"
+    "start": "node servidor.js",
+    "dev": "node --watch servidor.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",

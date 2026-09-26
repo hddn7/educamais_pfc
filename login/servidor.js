@@ -314,7 +314,10 @@ app.get('/api/cep/:cep', requireUser, async (request, response) => {
 });
 
 app.get('/download/codigos', (request, response) => {
-  response.download(path.join(directory, 'questio-pfc-codigos.zip'), 'questio-pfc-codigos.zip');
+  response.download(
+    path.join(directory, '..', 'questio-pfc-codigos.zip'),
+    'questio-pfc-codigos.zip',
+  );
 });
 
 app.use(express.static(path.join(directory, 'public'), { index: 'login.html' }));
