@@ -317,7 +317,7 @@ app.get('/download/codigos', (request, response) => {
   response.download(path.join(directory, 'questio-pfc-codigos.zip'), 'questio-pfc-codigos.zip');
 });
 
-app.use(express.static(path.join(directory, 'public')));
+app.use(express.static(path.join(directory, 'public'), { index: 'login.html' }));
 app.use((error, request, response, next) => {
   console.error(error);
   if (response.headersSent) return next(error);
