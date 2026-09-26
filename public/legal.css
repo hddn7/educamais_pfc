@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+
+:root {
+  font-family: 'DM Sans', sans-serif;
+  color: #24332f;
+  background: #f6f7f3;
+  font-synthesis: none;
+  --green: #28735e;
+  --green-dark: #1d5e4b;
+  --line: #dce2db;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: #f6f7f3;
+  color: #24332f;
+}
+a {
+  color: var(--green-dark);
+  text-underline-offset: 3px;
+}
+.legal-header {
+  display: flex;
+  height: 72px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 max(24px, calc((100vw - 860px) / 2));
+  border-bottom: 1px solid var(--line);
+}
+.legal-header > a:last-child,
+.legal-footer {
+  color: #637169;
+  font-size: 12px;
+}
+.brand {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  color: #24332f;
+  font:
+    800 18px Manrope,
+    sans-serif;
+  text-decoration: none;
+}
+.brand-light {
+  color: #7d8c85;
+  font-weight: 500;
+}
+.brand-mark {
+  display: grid;
+  width: 29px;
+  height: 29px;
+  place-items: center;
+  border-radius: 9px 9px 9px 3px;
+  background: var(--green);
+  color: white;
+  font:
+    700 18px Manrope,
+    sans-serif;
+}
+.legal-main {
+  width: min(760px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 57px 0 75px;
+}
+.eyebrow {
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+}
+h1 {
+  margin: 13px 0 7px;
+  font:
+    700 37px/1.2 Manrope,
+    sans-serif;
+  letter-spacing: 0;
+}
+.updated {
+  margin: 0 0 25px;
+  color: #75817b;
+  font-size: 12px;
+}
+.draft-note {
+  margin-bottom: 38px;
+  padding: 15px 17px;
+  border-left: 3px solid #bd9660;
+  background: #f0ede3;
+  color: #645b49;
+  font-size: 12px;
+  line-height: 1.7;
+}
+section {
+  margin-top: 28px;
+}
+section h2 {
+  margin: 0 0 8px;
+  font:
+    700 16px Manrope,
+    sans-serif;
+  letter-spacing: 0;
+}
+section p {
+  margin: 0 0 9px;
+  color: #59675f;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.legal-footer {
+  display: flex;
+  min-height: 64px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 max(24px, calc((100vw - 860px) / 2));
+  border-top: 1px solid var(--line);
+}
+@media (max-width: 540px) {
+  .legal-header {
+    height: 63px;
+  }
+  .legal-main {
+    padding-top: 37px;
+  }
+  h1 {
+    font-size: 31px;
+  }
+  .legal-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+  }
+}

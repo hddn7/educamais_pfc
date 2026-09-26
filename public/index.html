@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f6f7f3" />
+    <title>Questio PFC | Aprendizagem no seu ritmo</title>
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" type="module"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Questio PFC, início">
+        <span class="brand-mark" aria-hidden="true">q</span>
+        <span>questio<span class="brand-light"> pfc</span></span>
+      </a>
+      <div id="header-actions" class="header-actions"></div>
+    </header>
+
+    <main class="shell">
+      <section id="auth-view" class="auth-layout" aria-labelledby="welcome-title">
+        <div class="welcome-panel">
+          <span class="eyebrow">APRENDER COM AUTONOMIA</span>
+          <h1 id="welcome-title">Seu jeito de aprender importa.</h1>
+          <p>
+            Um espaço de aprendizagem adaptativa, construído para respeitar diferentes ritmos,
+            interesses e formas de participação.
+          </p>
+          <div class="welcome-note">
+            <span class="note-mark" aria-hidden="true">+</span>
+            <span>Sem pressa. Sem comparação. Um passo de cada vez.</span>
+          </div>
+          <div class="line-art" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+
+        <section class="auth-panel" aria-labelledby="auth-title">
+          <div class="auth-tabs" role="tablist" aria-label="Acesso à conta">
+            <button
+              class="auth-tab active"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              data-mode="login"
+            >
+              Entrar
+            </button>
+            <button
+              class="auth-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-mode="register"
+            >
+              Criar conta
+            </button>
+          </div>
+          <div id="auth-copy" class="auth-copy">
+            <h2 id="auth-title">Que bom ter você aqui.</h2>
+            <p>Entre para continuar de onde parou.</p>
+          </div>
+          <div id="message" class="notice" role="status" aria-live="polite" hidden></div>
+
+          <form id="login-form" class="auth-form">
+            <label for="login-email" class="form-label">E-mail</label>
+            <input
+              id="login-email"
+              name="email"
+              type="email"
+              class="form-control"
+              autocomplete="email"
+              maxlength="254"
+              required
+            />
+            <label for="login-password" class="form-label mt-3">Senha</label>
+            <input
+              id="login-password"
+              name="password"
+              type="password"
+              class="form-control"
+              autocomplete="current-password"
+              required
+            />
+            <button class="btn btn-primary w-100 submit-button" type="submit">
+              Entrar na minha conta <span aria-hidden="true">&#8594;</span>
+            </button>
+          </form>
+
+          <form id="register-form" class="auth-form" hidden>
+            <label for="register-name" class="form-label">Como podemos chamar você?</label>
+            <input
+              id="register-name"
+              name="name"
+              type="text"
+              class="form-control"
+              autocomplete="name"
+              minlength="2"
+              maxlength="80"
+              required
+            />
+            <label for="register-email" class="form-label mt-3">E-mail</label>
+            <input
+              id="register-email"
+              name="email"
+              type="email"
+              class="form-control"
+              autocomplete="email"
+              maxlength="254"
+              required
+            />
+            <label for="register-password" class="form-label mt-3">Crie uma senha</label>
+            <input
+              id="register-password"
+              name="password"
+              type="password"
+              class="form-control"
+              autocomplete="new-password"
+              minlength="10"
+              maxlength="128"
+              aria-describedby="password-hint"
+              required
+            />
+            <div id="password-hint" class="field-hint">Use pelo menos 10 caracteres.</div>
+            <label class="consent-check">
+              <input name="acceptedTerms" type="checkbox" required />
+              <span
+                >Li e aceito os
+                <a href="/termos.html" target="_blank" rel="noreferrer">Termos de uso</a> e a
+                <a href="/privacidade.html" target="_blank" rel="noreferrer"
+                  >Política de privacidade</a
+                >.</span
+              >
+            </label>
+            <button class="btn btn-primary w-100 submit-button" type="submit">
+              Criar minha conta <span aria-hidden="true">&#8594;</span>
+            </button>
+          </form>
+          <p class="form-footnote">
+            Se precisar, você pode pedir ajuda a uma pessoa de confiança durante o cadastro.
+          </p>
+        </section>
+      </section>
+
+      <section id="home-view" class="home-view" hidden aria-labelledby="home-title">
+        <div class="home-heading">
+          <div>
+            <span class="eyebrow">SEU ESPAÇO</span>
+            <h1 id="home-title">Olá, <span id="user-name"></span>.</h1>
+            <p>Hoje você pode seguir no seu ritmo.</p>
+          </div>
+          <span class="today-mark" aria-hidden="true">01</span>
+        </div>
+
+        <div class="workspace-grid">
+          <section class="workspace-main" aria-labelledby="address-title">
+            <div class="section-heading">
+              <div>
+                <span class="eyebrow">FERRAMENTAS</span>
+                <h2 id="address-title">Encontrar um endereço</h2>
+              </div>
+              <span class="section-symbol" aria-hidden="true">&#8982;</span>
+            </div>
+            <p class="section-description">
+              Informe um CEP para preencher o endereço automaticamente. O CEP é consultado pelo
+              serviço ViaCEP e não é salvo nesta conta.
+            </p>
+            <form id="cep-form" class="cep-form">
+              <div class="cep-input-wrap">
+                <label for="cep" class="form-label">CEP</label>
+                <input
+                  id="cep"
+                  name="cep"
+                  type="text"
+                  class="form-control"
+                  inputmode="numeric"
+                  autocomplete="postal-code"
+                  placeholder="00000-000"
+                  maxlength="9"
+                  aria-describedby="cep-hint"
+                  required
+                />
+                <span id="cep-hint" class="field-hint">Somente números ou CEP com hífen.</span>
+              </div>
+              <button class="btn btn-primary lookup-button" type="submit">
+                Buscar CEP <span aria-hidden="true">&#8594;</span>
+              </button>
+            </form>
+            <div id="cep-message" class="notice" role="status" aria-live="polite" hidden></div>
+            <dl id="address-result" class="address-result" hidden>
+              <div>
+                <dt>Logradouro</dt>
+                <dd data-address="street">—</dd>
+              </div>
+              <div>
+                <dt>Bairro</dt>
+                <dd data-address="neighborhood">—</dd>
+              </div>
+              <div>
+                <dt>Cidade</dt>
+                <dd data-address="city">—</dd>
+              </div>
+              <div>
+                <dt>Estado</dt>
+                <dd data-address="state">—</dd>
+              </div>
+            </dl>
+          </section>
+
+          <aside class="workspace-side" aria-labelledby="account-title">
+            <div class="side-heading">
+              <span class="eyebrow">CONTA</span
+              ><span class="side-icon" aria-hidden="true">&#10003;</span>
+            </div>
+            <h2 id="account-title">Seu acesso está pronto.</h2>
+            <p id="user-email" class="account-email"></p>
+            <a class="text-link" href="/privacidade.html"
+              >Ver privacidade e dados <span aria-hidden="true">&#8594;</span></a
+            >
+            <div class="account-divider"></div>
+            <button
+              id="logout-button"
+              class="btn btn-outline-secondary logout-button"
+              type="button"
+            >
+              Sair da conta
+            </button>
+          </aside>
+        </div>
+
+        <section class="audit-section" aria-labelledby="audit-title">
+          <div class="audit-heading">
+            <div>
+              <span class="eyebrow">TRANSPARÊNCIA</span>
+              <h2 id="audit-title">Atividade da conta</h2>
+            </div>
+            <span class="audit-caption">Últimos acessos</span>
+          </div>
+          <ul id="audit-list" class="audit-list" aria-live="polite"></ul>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>Questio PFC <span aria-hidden="true">·</span> aprendizagem no seu ritmo</span>
+      <nav aria-label="Informações legais">
+        <a href="/termos.html">Termos</a><a href="/privacidade.html">Privacidade</a>
+      </nav>
+    </footer>
+  </body>
+</html>

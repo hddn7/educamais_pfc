@@ -1,0 +1,21 @@
+{
+  "name": "questio-pfc",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Plataforma de aprendizagem adaptativa acessível para pessoas com TEA",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "better-sqlite3": "^12.2.0",
+    "bootstrap": "^5.3.8",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "express-session": "^1.18.2",
+    "helmet": "^8.1.0"
+  }
+}
