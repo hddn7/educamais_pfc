@@ -167,3 +167,21 @@ Metodologia: Scrum, com gestão de tarefas no GitHub Project.
 Status
 
 🚧 Em desenvolvimento.
+
+## Implementação Questio PFC
+
+O repositório também inclui uma aplicação executável em Node.js e Express, com interface em HTML, CSS e Bootstrap. Ela oferece cadastro e autenticação, auditoria de acessos, termos de uso, política de privacidade e consulta de CEP pelo ViaCEP. Esta implementação usa SQLite e pode ser executada localmente sem MySQL ou chave de API de IA.
+
+### Executar localmente
+
+Requisitos: Node.js 20 ou superior e npm.
+
+```powershell
+npm install
+Copy-Item .env.example .env
+npm run dev
+```
+
+Abra `http://localhost:3000`. Antes de usar em produção, substitua `SESSION_SECRET` no arquivo `.env` por um segredo aleatório com pelo menos 32 caracteres. O banco SQLite é criado automaticamente em `data/questio.sqlite`.
+
+Os documentos legais incluídos são minutas acadêmicas e precisam ser revisados antes de qualquer uso real.
